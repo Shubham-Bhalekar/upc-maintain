@@ -12,5 +12,5 @@
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
     "context/GlobalProvider.js"
-  ]
+, "context/GlobalContext.js"  ]
 }

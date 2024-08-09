@@ -21,6 +21,10 @@ module.exports = {
         accent: "#FFAB00",
         background: "#ECEFF1",
         text: "#455A64",
+        success: "#b6f2b6",
+        warning: "#fce4c5",
+        error: "#fdeaea",
+        info: "#7fd7fa",
       },
       fontFamily: {
         pthin: ["Poppins-Thin", "sans-serif"],

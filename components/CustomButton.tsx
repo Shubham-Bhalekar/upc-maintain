@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import React from "react";
 
 interface IProps {
@@ -7,6 +7,7 @@ interface IProps {
   containerStyles: string;
   textStyles: string;
   isLoading: boolean;
+  icon?: any;
 }
 
 const CustomButton = ({
@@ -15,6 +16,7 @@ const CustomButton = ({
   containerStyles,
   textStyles,
   isLoading,
+  icon,
 }: IProps) => {
   return (
     <TouchableOpacity
@@ -27,6 +29,7 @@ const CustomButton = ({
     >
       <Text className={`text-primary font-psemibold text-lg ${textStyles}`}>
         {title}
+        {icon && <Image source={icon} className=" ml-1 w-3 h-3" resizeMode="contain" tintColor={'#fff0f0'}/>}
       </Text>
     </TouchableOpacity>
   );

@@ -1,10 +1,13 @@
 import axios, { AxiosResponse } from "axios";
+import { getValueFor } from "./secure-store";
 
-export const fetchData = async (url: string, token?: string): Promise<any> => {
+const access_token = async () => await getValueFor("access_token");
+
+export const fetchData = async (url: string, token?: boolean): Promise<any> => {
   try {
     const response: AxiosResponse = await axios.get(url, {
       headers: {
-        ...(token && { Authorization: `Bearer ${token}` }),
+        ...(token && { Authorization: `Bearer ${await access_token()}` }),
       },
     });
     return response.data;
@@ -18,13 +21,13 @@ export const fetchData = async (url: string, token?: string): Promise<any> => {
 export const postData = async (
   url: string,
   data: Object,
-  token?: string
+  token?: boolean
 ): Promise<any> => {
   try {
     const response: AxiosResponse = await axios.post(url, data, {
       headers: {
         "Content-Type": "application/json",
-        ...(token && { Authorization: `Bearer ${token}` }),
+        ...(token && { Authorization: `Bearer ${await access_token()}` }),
       },
     });
     return response.data;
@@ -35,18 +38,22 @@ export const postData = async (
   }
 };
 
-export const putData = async (url: string, data: Object, token?: string): Promise<any> => {
-    try {
-      const response: AxiosResponse = await axios.put(url, data, {
-        headers: {
-          'Content-Type': 'application/json',
-          ...(token && { Authorization: `Bearer ${token}` }),
-        },
-      });
-      return response.data;
-    } catch (error) {
-      // Handle error
-      console.error('Error putting data:', error);
-      throw error;
-    }
-  };
+export const putData = async (
+  url: string,
+  data: Object,
+  token?: boolean
+): Promise<any> => {
+  try {
+    const response: AxiosResponse = await axios.put(url, data, {
+      headers: {
+        "Content-Type": "application/json",
+        ...(token && { Authorization: `Bearer ${await access_token()}` }),
+      },
+    });
+    return response.data;
+  } catch (error) {
+    // Handle error
+    console.error("Error putting data:", error);
+    throw error;
+  }
+};
