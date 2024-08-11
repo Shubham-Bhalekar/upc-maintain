@@ -1,4 +1,4 @@
-import { View, Text, Platform, TouchableOpacity } from "react-native";
+import { View, Text, Platform, TouchableOpacity, Alert } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FormField from "@/components/FormField";
@@ -8,6 +8,8 @@ import { fetchData, postData, putData } from "@/lib/api";
 import constants from "@/constants/constants";
 import { AxiosError } from "axios";
 import { StatusBar } from "expo-status-bar";
+// import alert from "@/lib/alert";
+import { logOut } from "@/lib/utils";
 
 interface IMessage {
   type: "success" | "warning" | "error" | "info" | "";
@@ -42,7 +44,6 @@ const ManualEntry = () => {
         }
       } catch (error: AxiosError | any) {
         if (error.response.status === 404) {
-          console.log("NotFound: ", error.response.status);
           setForm({ ...form, name: "" });
           setExist(false);
           setChecked(true);
@@ -51,6 +52,11 @@ const ManualEntry = () => {
             type: "success",
             text: "Product Not Found! Create New.",
           });
+        } else if (error.response.status === 401) {
+          alert(
+            "Session Expired. Please log in again.",
+          );
+          await logOut();
         } else {
           throw new Error(error);
         }

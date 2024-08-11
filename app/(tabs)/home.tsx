@@ -17,6 +17,7 @@ import FormField from "@/components/FormField";
 import constants from "@/constants/constants";
 import { fetchData, postData, putData } from "@/lib/api";
 import { AxiosError } from "axios";
+import { logOut } from "@/lib/utils";
 
 interface IMessage {
   type: "success" | "warning" | "error" | "info" | "";
@@ -74,7 +75,6 @@ const Home = () => {
         }
       } catch (error: AxiosError | any) {
         if (error.response.status === 404) {
-          console.log("NotFound: ", error.response.status);
           setForm({ ...form, code: scanningResult.data, name: "" });
           setExist(false);
           setChecked(true);
@@ -83,6 +83,9 @@ const Home = () => {
             type: "success",
             text: "Product Not Found! Create new entry.",
           });
+        } else if (error.response.status === 401) {
+          alert("Session Expired. Please log in again.");
+          await logOut();
         } else {
           throw new Error(error);
         }
@@ -130,6 +133,9 @@ const Home = () => {
           type: "error",
           text: "Product with UPC code already exists.",
         });
+      } else if (error.response.status === 401) {
+        alert("Session Expired. Please log in again.");
+        await logOut();
       } else {
         throw new Error(`${error}`);
       }

@@ -7,6 +7,7 @@ import { postData } from "@/lib/api";
 import constants from "@/constants/constants";
 import { getValueFor, save } from "@/lib/secure-store";
 import { router } from "expo-router";
+import alert from "@/lib/alert";
 
 const SignUp = () => {
   const [form, setForm] = useState({
@@ -25,7 +26,7 @@ const SignUp = () => {
       );
       router.push('/log-in');
     } catch (error) {
-      Alert.alert("Error", `${error}`);
+      alert("Error", `${error}`);
     }
   };
 

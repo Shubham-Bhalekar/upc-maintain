@@ -17,17 +17,14 @@ const GlobalProvider = ({ children }) => {
 
     useEffect(() => {
         checkUser().then((data) => {
-            console.log("data:", data)
             if (data.access_token && data.user_name) {
-                console.log("data presesnt:", data)
                 setUser(data.user_name);
                 setIsLoggedIn(true);
             } else if (data.access_token === "" && data.user_name === "") {
-                console.log("data absent:", data)
                 setIsLoggedIn(false);
             }
         }).catch((error) => {
-            console.log('---> ',error);
+            console.log(error);
         }).finally(() => {
             setIsLoading(false);
         });

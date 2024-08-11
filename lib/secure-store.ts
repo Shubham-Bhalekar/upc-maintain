@@ -9,11 +9,6 @@ export async function save(key: string, value: string) {
 export async function getValueFor(key: string) {
   try {
     let result = await AsyncStorage.getItem(key);
-    if (result) {
-      console.log("🔐 Here's your value 🔐 \n" + result);
-    } else {
-      console.log("No values stored under that key.");
-    }
     return result;
   } catch (error) {
     console.log("getValueFor: ", error);
